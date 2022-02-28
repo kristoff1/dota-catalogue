@@ -17,18 +17,26 @@ class HeroesService {
 
   Future<Either<String, List<HeroListModel>>> fetchHeroes() async {
     http.Response response = await api.getMusicList(network, api);
-    List<HeroListModel> modelList =
+    switch(response.statusCode) {
+      case 200:
+        List<HeroListModel> modelList =
         HeroesDataList.fromJson(jsonDecode(response.body))
             .heroes!
             .map((HeroesData data) {
-      return HeroListModel.parse(data);
-    }).toList();
+          return HeroListModel.parse(data);
+        }).toList();
 
-    ///TODO add cases for network errors and stuffs
-    if (modelList.isNotEmpty) {
-      return Right(modelList);
-    } else {
-      return Left('No Data');
+        ///TODO add cases for network errors and stuffs
+        if (modelList.isNotEmpty) {
+          return Right(modelList);
+        } else {
+          return Left('Found No Data');
+        }
+      case 404: return Left('Page not Found');
+      case 500:
+      default:
+        return Left('Error Connecting to Server');
     }
+
   }
 }

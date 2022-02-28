@@ -11,5 +11,4 @@ const List<String> roleList = [
   'Disabler',
   'Pusher',
   'Jungler',
-  'Misc',
 ];

@@ -7,6 +7,6 @@ class NetworkHelper {
 
   Future<http.Response> networkGet({required String path, String? query}) {
     Uri uri = Uri(scheme: 'https', host: baseHost, path: path, query: query);
-    return http.get(uri);
+    return http.get(uri).timeout(const Duration(milliseconds: 10000));
   }
 }

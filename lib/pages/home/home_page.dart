@@ -1,6 +1,8 @@
 import 'package:character_project/bloc/hero_cubit.dart';
 import 'package:character_project/bloc/hero_state.dart';
 import 'package:character_project/pages/home/service/heroes_service.dart';
+import 'package:character_project/pages/universal/errors/error_view.dart';
+import 'package:character_project/pages/universal/loading/loading_view.dart';
 import 'package:character_project/util/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +26,6 @@ class HomePageState extends State<HomePage> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     BlocProvider.of<HeroCubit>(context).getAllHeroes(
       HeroesService(
           api: InheritedInjection.of(context).api,
@@ -36,31 +37,25 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 10,
+        length: 9,
         child: BlocBuilder<HeroCubit, HeroState>(
             bloc: BlocProvider.of<HeroCubit>(context),
             builder: (BuildContext context, HeroState state) {
-              if (state.heroes.isEmpty) {
-                return Scaffold(
-                  appBar: AppBar(title: const Text('DOTA', style: TextStyle(color: Colors.white)), centerTitle: true),
-                  body: Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        BlocProvider.of<HeroCubit>(context).getAllHeroes(
-                          HeroesService(
-                              api: InheritedInjection.of(context).api,
-                              network: InheritedInjection.of(context).network),
-                        );
-                      },
-                      child: Text('Retry'),
-                    ),
-                  ),
-                );
+              if (state.heroes.isEmpty &&
+                  state.errorMessage != null &&
+                  state.errorMessage!.isEmpty) {
+                return const LoadingView();
               } else if (state.errorMessage != null &&
                   state.errorMessage!.isNotEmpty) {
-                return Center(
-                  child: Text('Error'),
-                );
+                return ErrorView(
+                    errorMessage: state.errorMessage ?? 'Unknown Error',
+                    onRetry: () {
+                      BlocProvider.of<HeroCubit>(context).getAllHeroes(
+                        HeroesService(
+                            api: InheritedInjection.of(context).api,
+                            network: InheritedInjection.of(context).network),
+                      );
+                    });
               }
               return Scaffold(
                 appBar: AppBar(
@@ -87,32 +82,28 @@ class HomePageState extends State<HomePage> {
                     }).toList()),
                     HeroListPage(
                         heroes: state.heroes.where((HeroListModel models) {
-                          return models.categories.contains(roleList[3]);
-                        }).toList()),
+                      return models.categories.contains(roleList[3]);
+                    }).toList()),
                     HeroListPage(
                         heroes: state.heroes.where((HeroListModel models) {
-                          return models.categories.contains(roleList[4]);
-                        }).toList()),
+                      return models.categories.contains(roleList[4]);
+                    }).toList()),
                     HeroListPage(
                         heroes: state.heroes.where((HeroListModel models) {
-                          return models.categories.contains(roleList[5]);
-                        }).toList()),
+                      return models.categories.contains(roleList[5]);
+                    }).toList()),
                     HeroListPage(
                         heroes: state.heroes.where((HeroListModel models) {
-                          return models.categories.contains(roleList[6]);
-                        }).toList()),
+                      return models.categories.contains(roleList[6]);
+                    }).toList()),
                     HeroListPage(
                         heroes: state.heroes.where((HeroListModel models) {
-                          return models.categories.contains(roleList[7]);
-                        }).toList()),
+                      return models.categories.contains(roleList[7]);
+                    }).toList()),
                     HeroListPage(
                         heroes: state.heroes.where((HeroListModel models) {
-                          return models.categories.contains(roleList[8]);
-                        }).toList()),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                          return models.categories.contains(roleList[9]);
-                        }).toList()),
+                      return models.categories.contains(roleList[8]);
+                    }).toList()),
                   ],
                 ),
               );
