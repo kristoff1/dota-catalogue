@@ -29,13 +29,13 @@ class HeroAdapter extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
               child: Image.network(heroAdapterModel.imageUrl,
                   fit: BoxFit.contain, height: reservedHeight * 0.5),
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

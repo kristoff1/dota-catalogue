@@ -8,6 +8,10 @@ class DotaTheme {
         primarySwatch: heroes,
         primaryColor: heroes,
         scaffoldBackgroundColor: heroes.shade400,
+        tabBarTheme: const TabBarTheme(
+          indicator: UnderlineTabIndicator(
+              borderSide: BorderSide(width: 3, color: heroesAccent))
+        ),
         textTheme: TextTheme(
             subtitle1: TextStyle(fontSize: 18.0, color: heroes.shade100),
             subtitle2: const TextStyle(fontSize: 14.0, color: Colors.white),

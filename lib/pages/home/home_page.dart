@@ -42,6 +42,7 @@ class HomePageState extends State<HomePage> {
             builder: (BuildContext context, HeroState state) {
               if (state.heroes.isEmpty) {
                 return Scaffold(
+                  appBar: AppBar(title: const Text('DOTA', style: TextStyle(color: Colors.white)), centerTitle: true),
                   body: Center(
                     child: ElevatedButton(
                       onPressed: () {
@@ -63,6 +64,8 @@ class HomePageState extends State<HomePage> {
               }
               return Scaffold(
                 appBar: AppBar(
+                  title: Text('DOTA'),
+                  centerTitle: true,
                   bottom: TabBar(
                       isScrollable: true,
                       tabs: roleList.map((String tabTitle) {
