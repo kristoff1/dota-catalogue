@@ -1,6 +1,6 @@
-# character_project
+# Dota Catalogue
 
-A new Flutter project.
+An simple application that shows and sorts Dota character Catalogue based on their attributes
 
 ## Getting Started
 
