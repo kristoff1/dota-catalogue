@@ -41,14 +41,11 @@ class HomePageState extends State<HomePage> {
         child: BlocBuilder<HeroCubit, HeroState>(
             bloc: BlocProvider.of<HeroCubit>(context),
             builder: (BuildContext context, HeroState state) {
-              if (state.heroes.isEmpty &&
-                  state.errorMessage != null &&
-                  state.errorMessage!.isEmpty) {
+              if (state is LoadingState) {
                 return const LoadingView();
-              } else if (state.errorMessage != null &&
-                  state.errorMessage!.isNotEmpty) {
+              } else if (state is ErrorLoadingState) {
                 return ErrorView(
-                    errorMessage: state.errorMessage ?? 'Unknown Error',
+                    errorMessage: state.errorMessage,
                     onRetry: () {
                       BlocProvider.of<HeroCubit>(context).getAllHeroes(
                         HeroesService(
@@ -56,57 +53,60 @@ class HomePageState extends State<HomePage> {
                             network: InheritedInjection.of(context).network),
                       );
                     });
+              } else if (state is HeroLoadedState) {
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text('DOTA'),
+                    centerTitle: true,
+                    bottom: TabBar(
+                        isScrollable: true,
+                        tabs: roleList.map((String tabTitle) {
+                          return Tab(
+                            text: tabTitle,
+                          );
+                        }).toList()),
+                  ),
+                  body: TabBarView(
+                    children: [
+                      HeroListPage(heroes: state.heroes),
+                      HeroListPage(
+                          heroes: state.heroes.where((HeroListModel models) {
+                            return models.categories.contains(roleList[1]);
+                          }).toList()),
+                      HeroListPage(
+                          heroes: state.heroes.where((HeroListModel models) {
+                            return models.categories.contains(roleList[2]);
+                          }).toList()),
+                      HeroListPage(
+                          heroes: state.heroes.where((HeroListModel models) {
+                            return models.categories.contains(roleList[3]);
+                          }).toList()),
+                      HeroListPage(
+                          heroes: state.heroes.where((HeroListModel models) {
+                            return models.categories.contains(roleList[4]);
+                          }).toList()),
+                      HeroListPage(
+                          heroes: state.heroes.where((HeroListModel models) {
+                            return models.categories.contains(roleList[5]);
+                          }).toList()),
+                      HeroListPage(
+                          heroes: state.heroes.where((HeroListModel models) {
+                            return models.categories.contains(roleList[6]);
+                          }).toList()),
+                      HeroListPage(
+                          heroes: state.heroes.where((HeroListModel models) {
+                            return models.categories.contains(roleList[7]);
+                          }).toList()),
+                      HeroListPage(
+                          heroes: state.heroes.where((HeroListModel models) {
+                            return models.categories.contains(roleList[8]);
+                          }).toList()),
+                    ],
+                  ),
+                );
+              } else {
+                return const LoadingView();
               }
-              return Scaffold(
-                appBar: AppBar(
-                  title: Text('DOTA'),
-                  centerTitle: true,
-                  bottom: TabBar(
-                      isScrollable: true,
-                      tabs: roleList.map((String tabTitle) {
-                        return Tab(
-                          text: tabTitle,
-                        );
-                      }).toList()),
-                ),
-                body: TabBarView(
-                  children: [
-                    HeroListPage(heroes: state.heroes),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                      return models.categories.contains(roleList[1]);
-                    }).toList()),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                      return models.categories.contains(roleList[2]);
-                    }).toList()),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                      return models.categories.contains(roleList[3]);
-                    }).toList()),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                      return models.categories.contains(roleList[4]);
-                    }).toList()),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                      return models.categories.contains(roleList[5]);
-                    }).toList()),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                      return models.categories.contains(roleList[6]);
-                    }).toList()),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                      return models.categories.contains(roleList[7]);
-                    }).toList()),
-                    HeroListPage(
-                        heroes: state.heroes.where((HeroListModel models) {
-                      return models.categories.contains(roleList[8]);
-                    }).toList()),
-                  ],
-                ),
-              );
             }));
   }
 }

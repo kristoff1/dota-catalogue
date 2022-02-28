@@ -1,10 +1,22 @@
 import 'package:character_project/model/hero_list_model.dart';
 
-class HeroState {
+abstract class HeroState {}
+
+class HeroLoadedState extends HeroState{
 
   final List<HeroListModel> heroes;
 
-  String? errorMessage;
+  HeroLoadedState({required this.heroes});
 
-  HeroState({required this.heroes, this.errorMessage = ''});
+}
+
+class LoadingState extends HeroState {
+  LoadingState();
+}
+
+class ErrorLoadingState extends HeroState {
+
+  final String errorMessage;
+
+  ErrorLoadingState({required this.errorMessage});
 }

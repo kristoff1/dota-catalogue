@@ -11,9 +11,9 @@ class HeroCubit extends Cubit<HeroState> {
   void getAllHeroes(HeroesService service) async {
     Either<String, List<HeroListModel>> result = await service.fetchHeroes();
     result.fold((String errorMessage) {
-      emit(HeroState(heroes: [], errorMessage: errorMessage));
+      emit(ErrorLoadingState(errorMessage: errorMessage));
     }, (List<HeroListModel> result) {
-      emit(HeroState(heroes: result));
+      emit(HeroLoadedState(heroes: result));
     });
   }
 }

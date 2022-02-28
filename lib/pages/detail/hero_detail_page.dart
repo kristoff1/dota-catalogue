@@ -44,10 +44,11 @@ class HeroDetailPage extends StatelessWidget {
             ),
             BlocBuilder<HeroCubit, HeroState>(
               bloc: BlocProvider.of<HeroCubit>(context),
+              buildWhen: (_, state) => state is HeroLoadedState,
               builder: (BuildContext context, HeroState state) {
                 List<HeroListModel> topThreeSimilar =
                 _heroListSortHelper.getSimilarHeroes(
-                  allHeroes: state.heroes,
+                  allHeroes: (state as HeroLoadedState).heroes,
                   attribute: selectedHero.primaryAttribute.keys.first,
                   heroId: selectedHero.id,
                 );

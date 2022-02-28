@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return InheritedInjection(
       child: BlocProvider(
-        create: (BuildContext context) => HeroCubit(HeroState(heroes: [])),
+        create: (BuildContext context) => HeroCubit(LoadingState()),
         child: MaterialApp(
           title: 'DOTA Catalogue',
           theme: DotaTheme.heroesTheme,
