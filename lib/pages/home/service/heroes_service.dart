@@ -16,7 +16,7 @@ class HeroesService {
   HeroesService({required this.api, required this.network});
 
   Future<Either<String, List<HeroListModel>>> fetchHeroes() async {
-    http.Response response = await api.getMusicList(network, api);
+    http.Response response = await api.getMusicList(network);
     switch(response.statusCode) {
       case 200:
         List<HeroListModel> modelList =

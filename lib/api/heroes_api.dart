@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class HeroesApi {
   Future<http.Response> getMusicList(
-      NetworkHelper helper, HeroesApi api) async {
+      NetworkHelper helper) async {
     try {
       http.Response response = await helper.networkGet(path: 'api/herostats');
       return response;
