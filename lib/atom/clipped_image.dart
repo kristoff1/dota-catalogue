@@ -1,34 +1,45 @@
 import 'package:flutter/material.dart';
 
 class ClippedImage extends StatelessWidget {
-  final Image heroPreviewImage;
+  final String imageUrl;
 
   final String heroName;
 
-  ClippedImage({required this.heroPreviewImage, required this.heroName});
+  final double width;
+
+  const ClippedImage({
+    Key? key,
+    required this.imageUrl,
+    required this.heroName,
+    required this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-
-      borderRadius: BorderRadius.circular(16),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          heroPreviewImage,
-          Text(heroName),
-        ],
+      borderRadius: BorderRadius.circular(12),
+      child: Align(
+        heightFactor: 0.5,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.5), BlendMode.dstATop),
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.fitWidth,
+                height: 180,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
+            Text(
+              heroName,
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
+          ],
+        ),
       ),
     );
-  }
-}
-
-class MyClip extends CustomClipper<Rect> {
-  Rect getClip(Size size) {
-    return Rect.fromLTWH(0, 0, 0, 100);
-  }
-
-  bool shouldReclip(oldClipper) {
-    return false;
   }
 }

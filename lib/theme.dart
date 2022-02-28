@@ -9,11 +9,11 @@ class DotaTheme {
         primaryColor: heroes,
         scaffoldBackgroundColor: heroes.shade400,
         textTheme: TextTheme(
-          subtitle2: const TextStyle(fontSize: 14.0, color: Colors.white),
+            subtitle1: TextStyle(fontSize: 18.0, color: heroes.shade100),
+            subtitle2: const TextStyle(fontSize: 14.0, color: Colors.white),
             bodyText1: TextStyle(fontSize: 14.0, color: heroes.shade300),
             bodyText2: TextStyle(fontSize: 12.0, color: heroes.shade300),
-          caption: TextStyle(fontSize: 14.0, color: heroes.shade400)
-        ),
+            caption: TextStyle(fontSize: 14.0, color: heroes.shade200)),
         buttonTheme: ButtonThemeData(
           // 4
           shape:
