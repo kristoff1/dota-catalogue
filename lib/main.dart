@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         create: (BuildContext context) => HeroCubit(LoadingState()),
         child: MaterialApp(
           title: 'DOTA Catalogue',
+          debugShowCheckedModeBanner: false,
           theme: DotaTheme.heroesTheme,
           home: HomePage(),
         ),
