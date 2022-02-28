@@ -1,6 +1,6 @@
 # Dota Catalogue
 
-An simple application that shows and sorts Dota character Catalogue based on their attributes
+A simple application that shows and sorts Dota character Catalogue based on their attributes
 
 ## Getting Started
 
